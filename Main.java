@@ -9,8 +9,26 @@ import java.net.URISyntaxException;
 import java.util.Scanner;
 
 public class Main{
+
+		static String gify="a";
+		static int num = 0;
+
 	public static void main(String[] args) {
-			Main.searchGifs("hackerz", 1);
+			
+			Main osoFeo = new Main(); 
+			osoFeo.askData();
+			osoFeo.searchGifs(gify, num);
+	}
+
+	public void askData(){
+
+		Scanner scan = new Scanner(System.in);
+		
+		System.out.println("Buscar gifs de:");
+		gify = scan.nextLine();
+		System.out.println("Cantidad: ");
+		num = scan.nextInt();
+		System.out.println("");
 	}
 
 	public static void searchGifs(String term, int numImages){
@@ -18,11 +36,15 @@ public class Main{
 
 		GiphyResponse gifs = service.searchGifs(term);
 		int i = 0;
+		int randy = 0;
 
 		for (Gif gif : gifs.getData()) {
 			i++;
 			if(i <= numImages){
-				Main.openInBrowser(gif.getImages().fixed_height.url);
+				randy = (int)Math.floor((float)Math.random()*gifs.getData().size());
+				Gif rand = gifs.getData().get(randy);
+				System.out.println(randy);
+				Main.openInBrowser(rand.getImages().fixed_height.url);
 			}
 		}
 	}
